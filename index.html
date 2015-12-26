@@ -70,7 +70,7 @@ img {
 
 <div id="summary" class="section level2">
 <h2>Summary</h2>
-<p>This is a report from building a prediction model for the quality of the Weight lifting exercises based on the measures gathered during the weight lifting exercise performed by 6 people. They were asked to do the same exercises in 1 correct way and 5 wrong ways. Each of these different ways of exercising were marked as different classes. The training data was used to create a prediction model that was later on used to predict the 20 test cases. Initial investigation was done to establish the best prediction model using different techniques. The chosen prediction model had <strong>0.9931</strong> Accuracy on the validation dataset. The data used here comes from the original study that can be found <a href="http://groupware.les.inf.puc-rio.br/har">here</a></p>
+<p>This is a report from building a prediction model for the quality of the Weight lifting exercises based on the measures gathered during the weight lifting exercise performed by 6 people. They were asked to do the same exercises in 1 correct way and 5 wrong ways. Each of these different ways of exercising were marked as different classes. The training data was used to create a prediction model that was later on used to predict the 20 test cases. Initial investigation was done to establish the best prediction model using different techniques. The chosen prediction model had <strong>99.31%</strong> accuracy on the validation dataset. The data used here comes from the original study that can be found <a href="http://groupware.les.inf.puc-rio.br/har">here</a></p>
 </div>
 <div id="data-analysis-and-preprocessing" class="section level2">
 <h2>Data analysis and preprocessing</h2>
@@ -155,8 +155,8 @@ img {
 ## Detection Rate         0.2845   0.1927   0.1707   0.1617   0.1835
 ## Detection Prevalence   0.2853   0.1943   0.1727   0.1637   0.1839
 ## Balanced Accuracy      0.9994   0.9969   0.9882   0.9919   0.9992</code></pre>
-<p>As shown, the model has excellent accuracy of <strong>99.31%</strong> on the validation dataset, and as displayed below the final model has <strong>0.76%</strong> OOB (out-of-bag) estimate of error rate on the training dataset.</p>
-<p>These results, together with the fact that the {caret} <strong>train</strong> function with the (<strong>rf</strong>) random forest algorithm uses cross-validation internally as per the documentation available <a href="http://topepo.github.io/caret/training.html">here</a> and thus, we do not need to use other methods for partitioning our dataset beyond what we used above.</p>
+<p>As shown, the model has excellent accuracy of <strong>99.31%</strong> on the validation dataset, and as displayed below the final model has <strong>0.76%</strong> OOB (out-of-bag) estimate of error rate on the training dataset. This means that the predicted error rate on the test set should be very small.</p>
+<p>These results, together with the fact that the {caret} <strong>train</strong> function with the (<strong>rf</strong>) random forest algorithm uses cross-validation internally as per the documentation available <a href="http://topepo.github.io/caret/training.html">here</a>, while building the final model, we do not need to use other methods for partitioning of our dataset beyond what we used above.</p>
 <pre><code>## 
 ## Call:
 ##  randomForest(x = x, y = y, mtry = param$mtry, proximity = TRUE) 

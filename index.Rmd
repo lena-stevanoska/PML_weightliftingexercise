@@ -10,7 +10,7 @@ output: html_document
 This is a report from building a prediction model for the quality of the Weight lifting exercises based on the measures gathered during the weight lifting exercise performed by 6 people. 
 They were asked to do the same exercises in 1 correct way and 5 wrong ways. Each of these different ways of exercising were marked as different classes. 
 The training data was used to create a prediction model that was later on used to predict the 20 test cases.
-Initial investigation was done to establish the best prediction model using different techniques. The chosen prediction model had **0.9931** Accuracy on the validation dataset.
+Initial investigation was done to establish the best prediction model using different techniques. The chosen prediction model had **99.31%** accuracy on the validation dataset.
 The data used here comes from the original study that can be found [here](http://groupware.les.inf.puc-rio.br/har)
 
 
@@ -101,9 +101,9 @@ confusionMatrix(pred,probe$classe)
 
 ```
 
-As shown, the model has excellent accuracy of **99.31%** on the validation dataset, and as displayed below the final model has **0.76%** OOB (out-of-bag) estimate of error rate on the training dataset. 
+As shown, the model has excellent accuracy of **99.31%** on the validation dataset, and as displayed below the final model has **0.76%** OOB (out-of-bag) estimate of error rate on the training dataset. This means that the predicted error rate on the test set should be very small.
 
-These results, together with the fact that the {caret} **train** function with the (**rf**) random forest algorithm uses cross-validation internally as per the documentation available [here](http://topepo.github.io/caret/training.html) and thus, we do not need to use other methods for partitioning our dataset beyond what we used above.
+These results, together with the fact that the {caret} **train** function with the (**rf**) random forest algorithm uses cross-validation internally as per the documentation available [here](http://topepo.github.io/caret/training.html), while building the final model, we do not need to use other methods for partitioning of our dataset beyond what we used above.
 
 ```{r modelrfvarimp, echo=FALSE, message=FALSE, warning=FALSE, cache=TRUE}
 classeFit$finalModel
