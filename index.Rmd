@@ -10,8 +10,8 @@ output: html_document
 This is a report from building a prediction model for the quality of the Weight lifting exercises based on the measures gathered during the weight lifting exercise performed by 6 people. 
 They were asked to do the same exercises in 1 correct way and 5 wrong ways. Each of these different ways of exercising were marked as different classes. 
 The training data was used to create a prediction model that was later on used to predict the 20 test cases.
-Initial investigation was done to establish the best prediction model using different techniques. The chosen prediction model had 0.9931 Accuracy on the test/validation datasets.
-The data used here comes from the original study that can be found here: http://groupware.les.inf.puc-rio.br/har
+Initial investigation was done to establish the best prediction model using different techniques. The chosen prediction model had 0.9931 Accuracy on the validation dataset.
+The data used here comes from the original study that can be found [here](http://groupware.les.inf.puc-rio.br/har)
 
 
 ## Data analysis and preprocessing
@@ -103,7 +103,7 @@ confusionMatrix(pred,probe$classe)
 
 As shown, the model has excelent accuracy of **0.9931** on the validation dataset, and as displayed below the final model has 0.76% OOB (out-of-bag) error rate on the training dataset. 
 
-These results, together with the fact that the caret train function with the rf random forest algorithm uses cross-validation internally as per this [documentation]{https://www.stat.berkeley.edu/~breiman/RandomForests/cc_home.htm} and thus, we do not need to use other methods for partitioning our dataset beyond what we used above.
+These results, together with the fact that the caret train function with the rf random forest algorithm uses cross-validation internally as per the documentation available [here](http://topepo.github.io/caret/training.html) and thus, we do not need to use other methods for partitioning our dataset beyond what we used above.
 
 ```{r modelrfvarimp, echo=FALSE, message=FALSE, warning=FALSE, cache=TRUE}
 classeFit$finalModel
