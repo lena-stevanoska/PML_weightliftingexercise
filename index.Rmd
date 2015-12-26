@@ -101,9 +101,9 @@ confusionMatrix(pred,probe$classe)
 
 ```
 
-As shown, the model has excellent accuracy of **0.9931** on the validation dataset, and as displayed below the final model has **0.76%** OOB (out-of-bag) error rate on the training dataset. 
+As shown, the model has excellent accuracy of **99.31%** on the validation dataset, and as displayed below the final model has **0.76%** OOB (out-of-bag) estimate of error rate on the training dataset. 
 
-These results, together with the fact that the caret train function with the rf random forest algorithm uses cross-validation internally as per the documentation available [here](http://topepo.github.io/caret/training.html) and thus, we do not need to use other methods for partitioning our dataset beyond what we used above.
+These results, together with the fact that the {caret} **train** function with the (**rf**) random forest algorithm uses cross-validation internally as per the documentation available [here](http://topepo.github.io/caret/training.html) and thus, we do not need to use other methods for partitioning our dataset beyond what we used above.
 
 ```{r modelrfvarimp, echo=FALSE, message=FALSE, warning=FALSE, cache=TRUE}
 classeFit$finalModel

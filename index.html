@@ -155,8 +155,8 @@ img {
 ## Detection Rate         0.2845   0.1927   0.1707   0.1617   0.1835
 ## Detection Prevalence   0.2853   0.1943   0.1727   0.1637   0.1839
 ## Balanced Accuracy      0.9994   0.9969   0.9882   0.9919   0.9992</code></pre>
-<p>As shown, the model has excellent accuracy of <strong>0.9931</strong> on the validation dataset, and as displayed below the final model has <strong>0.76%</strong> OOB (out-of-bag) error rate on the training dataset.</p>
-<p>These results, together with the fact that the caret train function with the rf random forest algorithm uses cross-validation internally as per the documentation available <a href="http://topepo.github.io/caret/training.html">here</a> and thus, we do not need to use other methods for partitioning our dataset beyond what we used above.</p>
+<p>As shown, the model has excellent accuracy of <strong>99.31%</strong> on the validation dataset, and as displayed below the final model has <strong>0.76%</strong> OOB (out-of-bag) estimate of error rate on the training dataset.</p>
+<p>These results, together with the fact that the {caret} <strong>train</strong> function with the (<strong>rf</strong>) random forest algorithm uses cross-validation internally as per the documentation available <a href="http://topepo.github.io/caret/training.html">here</a> and thus, we do not need to use other methods for partitioning our dataset beyond what we used above.</p>
 <pre><code>## 
 ## Call:
 ##  randomForest(x = x, y = y, mtry = param$mtry, proximity = TRUE) 
