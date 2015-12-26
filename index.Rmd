@@ -93,7 +93,7 @@ classeFit <- train(training$classe ~., data=training, method="rf",prox=TRUE)
 
 ```
 
-Below is the output of the confusion matrix of the prediction on the validation dataset using the final model from the random forest model building. 
+Below is the output of the confusion matrix of the prediction on the validation dataset using the final model from the random forest algorithm. 
 
 ```{r modelrandomforescheck, echo=FALSE, message=FALSE, warning=FALSE, cache=TRUE}
 pred <- predict(classeFit,probe)
@@ -116,7 +116,7 @@ classeFit$finalModel
 
 In order to get the results for the 20 test cases, the same cleaning process that was conducted on the training dataset was performed on the test dataset.
 
-The predicted values for the classe variable for the 20 cases are displayed below.
+The predicted values for the **classe** variable (what was the quality of the performed exercise) for the 20 cases are displayed below.
 
 ```{r resultset, echo=FALSE, message=FALSE, warning=FALSE, cache=TRUE}
 

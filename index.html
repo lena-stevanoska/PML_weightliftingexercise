@@ -123,7 +123,7 @@ img {
 ## Detection Prevalence   0.2113   0.2584   0.2867  0.08014   0.1635
 ## Balanced Accuracy      0.7631   0.7031   0.7627  0.61423   0.6949</code></pre>
 <p>Next model that was tested was the random forest model, built using the train function from the caret package on the training dataset with the proximity parameter set to TRUE.</p>
-<p>Below is the output of the confusion matrix of the prediction on the validation dataset using the final model from the random forest model building.</p>
+<p>Below is the output of the confusion matrix of the prediction on the validation dataset using the final model from the random forest algorithm.</p>
 <pre><code>## Confusion Matrix and Statistics
 ## 
 ##           Reference
@@ -176,7 +176,7 @@ img {
 <div id="results-on-the-test-set" class="section level1">
 <h1>Results on the test set</h1>
 <p>In order to get the results for the 20 test cases, the same cleaning process that was conducted on the training dataset was performed on the test dataset.</p>
-<p>The predicted values for the classe variable for the 20 cases are displayed below.</p>
+<p>The predicted values for the <strong>classe</strong> variable (what was the quality of the performed exercise) for the 20 cases are displayed below.</p>
 <pre><code>##  [1] B A B A A E D B A A B C B A E E A B B B
 ## Levels: A B C D E</code></pre>
 </div>
