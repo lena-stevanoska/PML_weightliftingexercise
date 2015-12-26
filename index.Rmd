@@ -76,7 +76,7 @@ g
 
 ## Model selection
 
-First a classification tree was fitted. But, as the confusion matrix shows below, it has only 65% accuracy.
+First a classification tree was fitted using the train function from the caret package. But, as the confusion matrix shows below, the accuracy on the validation dataset was under 54%. Hence, this model was disrigarded.
 
 ```{r modelclasstree, echo=FALSE, message=FALSE, warning=FALSE, cache=TRUE}
 modFit<-train(classe~.,method="rpart",data=training)
@@ -86,24 +86,37 @@ confusionMatrix(pred2,probe$classe)
 
 ```
 
-Next model that was tested was the random forest.
+Next model that was tested was the random forest model, built using the train function from the caret package on the training dataset with the proximity parameter set to TRUE.
 
 ```{r modelrandomfores, echo=FALSE, message=FALSE, warning=FALSE, cache=TRUE}
 classeFit <- train(training$classe ~., data=training, method="rf",prox=TRUE)
 
 ```
 
+Below is the output of the confusion matrix of the prediction on the validation dataset using the final model from the random forest model building. 
+
 ```{r modelrandomforescheck, echo=FALSE, message=FALSE, warning=FALSE, cache=TRUE}
 pred <- predict(classeFit,probe)
-probe$predRight <- pred == probe$classe
-table(pred,probe$classe)
-
 confusionMatrix(pred,probe$classe)
 
 ```
 
+As shown, the model has excelent accuracy of **0.9931** on the validation dataset, and as displayed below the final model has 0.76% OOB (out-of-bag) error rate on the training dataset. 
+
+These results, together with the fact that the caret train function with the rf random forest algorithm uses cross-validation internally as per this [documentation]{https://www.stat.berkeley.edu/~breiman/RandomForests/cc_home.htm} and thus, we do not need to use other methods for partitioning our dataset beyond what we used above.
+
+```{r modelrfvarimp, echo=FALSE, message=FALSE, warning=FALSE, cache=TRUE}
+classeFit$finalModel
+
+```
+
+
 
 #Results on the test set
+
+In order to get the results for the 20 test cases, the same cleaning process that was conducted on the training dataset was performed on the test dataset.
+
+The predicted values for the classe variable for the 20 cases are displayed below.
 
 ```{r resultset, echo=FALSE, message=FALSE, warning=FALSE, cache=TRUE}
 

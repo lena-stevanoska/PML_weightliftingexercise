@@ -90,7 +90,7 @@ img {
 </div>
 <div id="model-selection" class="section level2">
 <h2>Model selection</h2>
-<p>First a classification tree was fitted. But, as the confusion matrix shows below, it has only 65% accuracy.</p>
+<p>First a classification tree was fitted using the train function from the caret package. But, as the confusion matrix shows below, the accuracy on the validation dataset was under 54%. Hence, this model was disrigarded.</p>
 <pre><code>## Confusion Matrix and Statistics
 ## 
 ##           Reference
@@ -122,14 +122,8 @@ img {
 ## Detection Rate         0.1672   0.1134   0.1256  0.04445   0.0885
 ## Detection Prevalence   0.2113   0.2584   0.2867  0.08014   0.1635
 ## Balanced Accuracy      0.7631   0.7031   0.7627  0.61423   0.6949</code></pre>
-<p>Next model that was tested was the random forest.</p>
-<pre><code>##     
-## pred    A    B    C    D    E
-##    A 1395    3    1    0    0
-##    B    0  945    8    0    0
-##    C    0    1  837    9    0
-##    D    0    0    9  793    1
-##    E    0    0    0    2  900</code></pre>
+<p>Next model that was tested was the random forest model, built using the train function from the caret package on the training dataset with the proximity parameter set to TRUE.</p>
+<p>Below is the output of the confusion matrix of the prediction on the validation dataset using the final model from the random forest model building.</p>
 <pre><code>## Confusion Matrix and Statistics
 ## 
 ##           Reference
@@ -161,9 +155,28 @@ img {
 ## Detection Rate         0.2845   0.1927   0.1707   0.1617   0.1835
 ## Detection Prevalence   0.2853   0.1943   0.1727   0.1637   0.1839
 ## Balanced Accuracy      0.9994   0.9969   0.9882   0.9919   0.9992</code></pre>
+<p>As shown, the model has excelent accuracy of <strong>0.9931</strong> on the validation dataset, and as displayed below the final model has 0.76% OOB (out-of-bag) error rate on the training dataset.</p>
+<p>These results, together with the fact that the caret train function with the rf random forest algorithm uses cross-validation internally as per this [documentation]{<a href="https://www.stat.berkeley.edu/~breiman/RandomForests/cc_home.htm" class="uri">https://www.stat.berkeley.edu/~breiman/RandomForests/cc_home.htm</a>} and thus, we do not need to use other methods for partitioning our dataset beyond what we used above.</p>
+<pre><code>## 
+## Call:
+##  randomForest(x = x, y = y, mtry = param$mtry, proximity = TRUE) 
+##                Type of random forest: classification
+##                      Number of trees: 500
+## No. of variables tried at each split: 2
+## 
+##         OOB estimate of  error rate: 0.76%
+## Confusion matrix:
+##      A    B    C    D    E  class.error
+## A 4183    2    0    0    0 0.0004778973
+## B   14 2824    9    0    1 0.0084269663
+## C    1   22 2530   14    0 0.0144137125
+## D    0    1   38 2371    2 0.0169983416
+## E    0    0    1    7 2698 0.0029563932</code></pre>
 </div>
 <div id="results-on-the-test-set" class="section level1">
 <h1>Results on the test set</h1>
+<p>In order to get the results for the 20 test cases, the same cleaning process that was conducted on the training dataset was performed on the test dataset.</p>
+<p>The predicted values for the classe variable is displayed below.</p>
 <pre><code>##  [1] B A B A A E D B A A B C B A E E A B B B
 ## Levels: A B C D E</code></pre>
 </div>
