@@ -156,11 +156,7 @@ img {
 ## Detection Prevalence   0.2853   0.1943   0.1727   0.1637   0.1839
 ## Balanced Accuracy      0.9994   0.9969   0.9882   0.9919   0.9992</code></pre>
 <p>As shown, the model has excelent accuracy of <strong>0.9931</strong> on the validation dataset, and as displayed below the final model has 0.76% OOB (out-of-bag) error rate on the training dataset.</p>
-<<<<<<< HEAD
 <p>These results, together with the fact that the caret train function with the rf random forest algorithm uses cross-validation internally as per the documentation available <a href="http://topepo.github.io/caret/training.html">here</a> and thus, we do not need to use other methods for partitioning our dataset beyond what we used above.</p>
-=======
-<p>These results, together with the fact that the caret train function with the rf random forest algorithm uses cross-validation internally as per this [documentation]{<a href="https://www.stat.berkeley.edu/~breiman/RandomForests/cc_home.htm" class="uri">https://www.stat.berkeley.edu/~breiman/RandomForests/cc_home.htm</a>} and thus, we do not need to use other methods for partitioning our dataset beyond what we used above.</p>
->>>>>>> e9a704026b19e9f4e2752e0d51c0a4b3e561f1ae
 <pre><code>## 
 ## Call:
 ##  randomForest(x = x, y = y, mtry = param$mtry, proximity = TRUE) 
@@ -180,11 +176,7 @@ img {
 <div id="results-on-the-test-set" class="section level1">
 <h1>Results on the test set</h1>
 <p>In order to get the results for the 20 test cases, the same cleaning process that was conducted on the training dataset was performed on the test dataset.</p>
-<<<<<<< HEAD
 <p>The predicted values for the classe variable for the 20 cases are displayed below.</p>
-=======
-<p>The predicted values for the classe variable is displayed below.</p>
->>>>>>> e9a704026b19e9f4e2752e0d51c0a4b3e561f1ae
 <pre><code>##  [1] B A B A A E D B A A B C B A E E A B B B
 ## Levels: A B C D E</code></pre>
 </div>
