@@ -1,22 +1,119 @@
 ---
-title: "Predicting of the Weight lifting exercise type"
+title: "Predicting the exercise quality from the Weight lifting exercise measures"
 author: "Lena Stevanoska"
 date: "25 December 2015"
 output: html_document
 ---
 
-This is an R Markdown document. Markdown is a simple formatting syntax for authoring HTML, PDF, and MS Word documents. For more details on using R Markdown see <http://rmarkdown.rstudio.com>.
+##Summary
 
-When you click the **Knit** button a document will be generated that includes both content as well as the output of any embedded R code chunks within the document. You can embed an R code chunk like this:
+This is a report from building a prediction model for the quality of the Weight lifting exercises based on the measures gathered during the weight lifting exercise performed by 6 people. 
+They were asked to do the same exercises in 1 correct way and 5 wrong ways. Each of these different ways of exercising were marked as different classes. 
+The training data was used to create a prediction model that was later on used to predict the 20 test cases.
+Initial investigation was done to establish the best prediction model using different techniques. The chosen prediction model had 0.9931 Accuracy on the test/validation datasets.
+The data used here comes from the original study that can be found here: http://groupware.les.inf.puc-rio.br/har
 
-```{r}
-summary(cars)
+
+## Data analysis and preprocessing
+
+
+The data from the plm-training.csv file was first analysed and cleaned before dividing it into training and validation datasets, using the variable "classe" and ensuring the training dataset has 75% of the observations.
+
+```{r loaddata, echo=FALSE, results='hide', message=FALSE, warning=FALSE, cache=TRUE}
+library(plyr)
+library(dplyr)
+library(caret)
+library(ggplot2)
+rm(list=ls())
+dat<-read.csv('data\\pml-training.csv')
+set.seed(12346)
+nsv <- nearZeroVar(dat,saveMetrics=TRUE)
+nsv_positions <- nearZeroVar(dat,saveMetrics=FALSE)
+filtered_training <- dat[-c(nsv_positions)]
+excluding_vars <- names(filtered_training) %in% c("X","user_name","raw_timestamp_part_1","raw_timestamp_part_2","cvtd_timestamp","new_window","num_window")
+filtered_training  <- filtered_training[!excluding_vars]
+exclude_cols <- grep("^var|^avg|^max|^min|^std|^amplitude",names(filtered_training))
+filtered_training <- filtered_training[-c(exclude_cols)]
+filtered_training_no_class <- filtered_training[-c(dim(filtered_training))]
+correlated_cols_to_exclude <- findCorrelation(cor(filtered_training_no_class), cutoff= 0.75)
+corvars<-names(filtered_training)[correlated_cols_to_exclude]
+filtered_training <- filtered_training[-c(correlated_cols_to_exclude)]
+filtered_partition = createDataPartition(filtered_training$classe, p=0.75, list=F)
+
+training <- filtered_training[filtered_partition,]
+probe <- filtered_training[-filtered_partition,]
+
+trainobs<-dim(training)[1]
+testobs<-dim(probe)[1]
+inivar<-dim(probe)[2]
+nzv<-length(nsv)
+
+rm(dat,filtered_training)
+
 ```
 
-You can also embed plots, for example:
+First step in the cleaning of the data was identifying the near zero values. There were **`r nzv`** variables identified as near Zero value. After manual review of the variables, they were removed from the training dataset.
 
-```{r, echo=FALSE}
-plot(cars)
+Since this model needs to predict the quality of the exercise based on the measurements from the actions performed regardless of who is performing it and when, I've removed the variables that were related to the user name, timestamp, order, window number and the indication if it's a new window. Also, all the variables that have been added by the initial research team, like average, variability, min, max, std or amplitude were removed, since they were created after processing of the initial input values. As a final step in the cleaning process, all variables that have correlation of more then 0.75 were excluded. They are listed below.
+
+```{r corvar,echo=FALSE, cache=TRUE}
+corvars
 ```
 
-Note that the `echo = FALSE` parameter was added to the code chunk to prevent printing of the R code that generated the plot.
+After the cleaning, the dataset was devided in 2 datasets. The training set contained  **`r trainobs`** observations and the validation set contained **`r testobs`** observations, each with **`r inivar`** variables.
+
+The following plot show the distribution of the quality of the exercises from the training dataset.
+
+```{r plotanal,echo=FALSE,warning=FALSE,message=FALSE}
+library(ggplot2)
+
+g<-qplot(training$classe, colour=training$classe,fill=training$classe,xlab = "Exercise quality type")
+g<-g+theme_bw()+theme(legend.position="none")
+g
+```
+
+
+
+## Model selection
+
+First a classification tree was fitted. But, as the confusion matrix shows below, it has only 65% accuracy.
+
+```{r modelclasstree, echo=FALSE, message=FALSE, warning=FALSE, cache=TRUE}
+modFit<-train(classe~.,method="rpart",data=training)
+pred2<-predict(modFit,newdata=probe)
+
+confusionMatrix(pred2,probe$classe)
+
+```
+
+Next model that was tested was the random forest.
+
+```{r modelrandomfores, echo=FALSE, message=FALSE, warning=FALSE, cache=TRUE}
+classeFit <- train(training$classe ~., data=training, method="rf",prox=TRUE)
+
+```
+
+```{r modelrandomforescheck, echo=FALSE, message=FALSE, warning=FALSE, cache=TRUE}
+pred <- predict(classeFit,probe)
+probe$predRight <- pred == probe$classe
+table(pred,probe$classe)
+
+confusionMatrix(pred,probe$classe)
+
+```
+
+
+#Results on the test set
+
+```{r resultset, echo=FALSE, message=FALSE, warning=FALSE, cache=TRUE}
+
+dattest<-read.csv('data\\pml-testing.csv')
+
+test_set <- dattest[-c(nsv_positions)]
+test_set <- test_set[!excluding_vars]
+test_set <- test_set[-c(exclude_cols)]
+test_set <- test_set[-c(correlated_cols_to_exclude)]
+
+predOnTest <- predict(classeFit,test_set)
+predOnTest
+```
